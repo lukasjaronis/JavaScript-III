@@ -22,7 +22,7 @@ function GameObject(gameAttr) {
     this.name = gameAttr.name;
 }
 
-GameObject.prototype.destroy = function() {
+GameObject.prototype.destroy = function () {
   return `${this.name} was removed from the game`;
 }
 
@@ -36,13 +36,17 @@ GameObject.prototype.destroy = function() {
 
 function CharacterStats(charAttr) {
   this.healthPoints = charAttr.healthPoints,
-  GameObject.call(this, charAttr);
+    GameObject.call(this, charAttr);
 }
 
 CharacterStats.prototype = Object.create(GameObject.prototype); // inheritance 
- 
-CharacterStats.prototype.takeDamage = function() {
+
+CharacterStats.prototype.takeDamage = function () {
   return `${this.name} took damage!`;
+}
+
+CharacterStats.prototype.speak = function () {
+  return `${this.name} barked precariously until completely passing out.`;
 }
 
 
@@ -61,6 +65,7 @@ function Humanoid(humanAttr) {
   this.team = humanAttr.team,
     this.weapons = humanAttr.weapons,
     this.language = humanAttr.language,
+    this.born = humanAttr.born,
     CharacterStats.call(this, humanAttr);
 }
 
@@ -69,6 +74,7 @@ Humanoid.prototype = Object.create(CharacterStats.prototype); // inheritance
 Humanoid.prototype.greet = function () {
   return `${this.name} offers a greeting in ${this.language}`;
 }
+
 
 
 /*
@@ -130,6 +136,74 @@ const archer = new Humanoid({
   language: 'Elvish',
 });
 
+// stretch
+
+function HealhKnock(value) {
+  return value - Math.round(Math.random() * 100);
+}
+
+
+// villian
+function Villian(villianAttr) {
+  Humanoid.call(this, villianAttr);
+  HealhKnock.call(this. villianAttr);
+  this.attack = villianAttr.attack;
+  this.hp = villianAttr.hp;
+}
+
+Villian.prototype = Object.create(Humanoid.prototype);
+
+
+// hero
+function Hero(heroAttr) {
+  Humanoid.call(this, heroAttr);
+  this.attack = heroAttr.attack;
+  this.hp = heroAttr.hp;
+}
+
+Hero.prototype = Object.create(Humanoid.prototype);
+
+
+
+
+const Kai = new Villian({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  healthPoints: 100,
+  name: 'Kai',
+  team: 'The Hot Dogs',
+  weapons: [
+    'Claw',
+    ' Attitude',
+  ],
+  language: 'Elvish',
+  attack: 'Claw with a pinch of attitude',
+  hp: 100,
+});
+
+const Eko = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 4,
+  },
+  healthPoints: 100,
+  name: 'Eko',
+  team: 'The Potatoes',
+  weapons: [
+    'Claw',
+    ' Mouth',
+  ],
+  language: 'Elvish',
+  attack: 'Steps on your feet',
+  hp: 100,
+});
+
 
 
 console.log(mage.createdAt); // Today's date
@@ -142,6 +216,20 @@ console.log(archer.language); // Elvish
 console.log(archer.greet()); // Lilith offers a greeting in Elvish.
 console.log(mage.takeDamage()); // Bruce took damage.
 console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+
+
+
+console.log(`3`);
+console.log(`2`);
+console.log(`1`);
+console.log(`Fight!`);
+console.log(`${Kai.name} the Villian has ${Kai.healthPoints} healthpoints and the following weapons: ${Kai.weapons}!`);
+console.log(`${Eko.name} the Hero has ${Eko.healthPoints} healthpoints and the following weapons: ${Eko.weapons}!`);
+console.log(`Who will win?!`);
+console.log(`${Kai.name} activates a special attack! (${Kai.attack})`);
+console.log(`${Kai.name} does ${HealhKnock(Eko.hp)} damage to ${Eko.name}`);
+console.log(`${Eko.name} retaliates back with a special attack! (${Eko.attack}), inducing ${HealhKnock(Kai.hp)} damage!`);
+
 
 
 // Stretch task: 
